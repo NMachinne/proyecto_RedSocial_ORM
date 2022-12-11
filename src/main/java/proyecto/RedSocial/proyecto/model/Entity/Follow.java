@@ -3,8 +3,8 @@ package proyecto.RedSocial.proyecto.model.Entity;
 import proyecto.RedSocial.proyecto.Interfaces.IFollow;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,18 +20,19 @@ public class Follow implements  Serializable {
 	@Id
 	@Column(name="ID")
 	protected int id;
-	@Id
-	@OneToMany(mappedBy = "follow",cascade = CascadeType.ALL)
-	protected User idUsuario;
-
-	public Follow(int id, User idUsuario) {
+	//@Id
+	//@OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
+	@Column(name="ID_USUARIO")
+	//protected List<User>  idUsuario;
+	protected int  idUsuario;
+	public Follow(int id, int idUsuario) {
 		super();
 		this.id = id;
 		this.idUsuario = idUsuario;
 	}
 	
 	public Follow() {
-		this(-1,null);
+		this(-1,-1);
 	}
 	
 	public int getId() {
@@ -40,12 +41,14 @@ public class Follow implements  Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<User>  getIdUsuario() {
+	public int  getIdUsuario() {
 		return idUsuario;
 	}
-	public void setIdUsuario(List<User> idUsuario) {
+	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	
+
 	
 	
 	

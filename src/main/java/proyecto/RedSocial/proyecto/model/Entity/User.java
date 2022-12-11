@@ -1,37 +1,42 @@
 package proyecto.RedSocial.proyecto.model.Entity;
 
 import java.io.Serializable;
+import java.sql.Blob;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import proyecto.RedSocial.proyecto.Interfaces.IUser;
 
 @Entity
-@Table(name = "USER",uniqueConstraints=
-@UniqueConstraint(columnNames={"NOMBRE"})
-)
-public class User implements IUser,Serializable {
+@Table(name = "USER")
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="ID")
 	protected int id;
 	@Column(name="NOMBRE")
+	//@UniqueConstraint(name="NOMBRE")
 	protected String nombre;
 	@Column(name="PASSWORD")
 	protected String password;
-	@Column(name="AVATAR")
-	protected String avatar;
+	@Lob
+	@Column(name="AVATAR",columnDefinition = "Blob")
+	protected Blob avatar;
+	
 
 	
 	public User() {
-		this(-1,"","","");
+		this(-1,"","",null);
 	}
 	
-	public User(int id, String nombre, String password, String avatar) {
+	public User(int id, String nombre, String password, Blob avatar) {
 		this.id = id;
 		this.nombre = nombre;
 		this.password = password;
@@ -62,15 +67,15 @@ public class User implements IUser,Serializable {
 		this.password = password;
 	}
 
-	public String getAvatar() {
+	public Blob getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(String avatar) {
+	public void setAvatar(Blob avatar) {
 		this.avatar = avatar;
 	}
 	
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -92,6 +97,7 @@ public class User implements IUser,Serializable {
 			return false;
 		return true;
 	}
+	
 
 	@Override
 	public String toString() {

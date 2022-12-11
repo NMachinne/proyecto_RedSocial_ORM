@@ -1,30 +1,34 @@
 package proyecto.RedSocial.proyecto.model.Entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import proyecto.RedSocial.proyecto.Interfaces.ILike;
 
 @Entity
-@Table(name = "LIKE")
-public class Like implements ILike,Serializable{
+@Table(name = "LIKES")
+public class Like implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id	
+	@Column(name = "ID_USUARIO")
 	protected int id;
-	@OneToOne(mappedBy = "like", cascade = CascadeType.ALL)
-	@JoinColumn(name="ID_PUBLICACION")
+	//@ManyToOne(cascade = CascadeType.ALL)
+	//@JoinColumn(name="ID_PUBLICACION")
+	@Column(name="ID_PUBLICACION")
 	protected int idPublicacion;
 	@Column(name="FECHA")
-	protected String fecha;
+	protected Timestamp fecha;
 	
-	public Like(int id, int idPublicacion, String fecha) {
+	public Like(int id, int idPublicacion, Timestamp fecha) {
 		super();
 		this.id = id;
 		this.idPublicacion = idPublicacion;
@@ -51,11 +55,11 @@ public class Like implements ILike,Serializable{
 		this.idPublicacion = idPublicacion;
 	}
 
-	public String getFecha() {
+	public Timestamp getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Timestamp fecha) {
 		this.fecha = fecha;
 	}
 

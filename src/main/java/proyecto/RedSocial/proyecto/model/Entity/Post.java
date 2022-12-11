@@ -2,12 +2,15 @@ package proyecto.RedSocial.proyecto.model.Entity;
 
 
 import java.io.Serializable;
+import java.sql.Blob;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -15,36 +18,36 @@ import proyecto.RedSocial.proyecto.Interfaces.IPost;
 
 @Entity
 @Table(name = "POST")
-public class Post implements IPost,Serializable {
+public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="ID")
 	protected int id;
 	@Column(name="FECHA")
-	protected String fecha;
-	@Column(name="TXT")
+	protected Timestamp fecha;
+	@Column(name="TEXTO")
 	protected String txt;
-	@Column(name="MULTIMEDIA")
-	protected String multimedia;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_USUARIO")
-	protected User likes;
-	protected Comment comment;
+	@Lob
+	@Column(name="MULTIMEDIA",columnDefinition = "Blob")
+	protected Blob multimedia;
+	//@ManyToOne(fetch = FetchType.LAZY)
+	//@JoinColumn(name="ID_USUARIO")
+	@Column(name="ID_USUARIO")
+	protected int likes;
 
-	public Post(int id, String fecha, String txt, String multimedia, User likes, Comment comment) {
+	public Post(int id, Timestamp fecha, String txt, Blob multimedia, int likes, Comment comment) {
 		this.id = id;
 		this.fecha = fecha;
 		this.txt = txt;
 		this.multimedia = multimedia;
 		this.likes = likes;
-		this.comment = comment;
 	}
 
 	public Post() {
-		this(-1,"","","",null,null);
+		this(-1,null,"",null,-1,null);
 	}
 	
-	public Post(int id, String fecha, String txt, String multimedia) {
+	public Post(int id, Timestamp fecha, String txt, Blob multimedia) {
 		this.id = id;
 		this.fecha = fecha;
 		this.txt = txt;
@@ -59,11 +62,11 @@ public class Post implements IPost,Serializable {
 		this.id = id;
 	}
 
-	public String getFecha() {
+	public Timestamp getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Timestamp fecha) {
 		this.fecha = fecha;
 	}
 
@@ -75,29 +78,22 @@ public class Post implements IPost,Serializable {
 		this.txt = txt;
 	}
 
-	public String getMultimedia() {
+	public Blob getMultimedia() {
 		return multimedia;
 	}
 
-	public void setMultimedia(String multimedia) {
+	public void setMultimedia(Blob multimedia) {
 		this.multimedia = multimedia;
 	}
 
-	public User getLikes() {
+	public int getLikes() {
 		return likes;
 	}
 
-	public void setLikes(User likes) {
+	public void setLikes(int likes) {
 		this.likes = likes;
 	}
 
-	public Comment getComment() {
-		return comment;
-	}
-
-	public void setComment(Comment comment) {
-		this.comment = comment;
-	}
 
 	@Override
 	public int hashCode() {
@@ -124,7 +120,7 @@ public class Post implements IPost,Serializable {
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", fecha=" + fecha + ", txt=" + txt + ", multimedia=" + multimedia + ", likes="
-				+ likes + ", comment=" + comment + "]";
+				+ likes + ", comment=" + "]";
 	}
 
 }

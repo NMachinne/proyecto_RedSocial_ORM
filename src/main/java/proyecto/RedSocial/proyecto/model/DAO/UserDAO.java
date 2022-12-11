@@ -2,6 +2,7 @@ package proyecto.RedSocial.proyecto.model.DAO;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -106,8 +107,8 @@ public class UserDAO extends ADAO {
 		return u;
 	}
 
-	public Collection<User> getAll() {
-		Collection<User> u = null;
+	public List<User> getAll() {
+		List<User> u = null;
 		u = manager.createQuery(SELECTALL).getResultList();
 		return u;
 	}
