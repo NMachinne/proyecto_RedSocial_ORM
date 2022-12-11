@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="postUserId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showUserPost" prefHeight="170.0" prefWidth="150.0" style="-fx-background-color: #6936f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.UserPostController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="153.0" prefWidth="150.0" style="-fx-border-color: black;">
+         <children>
+            <ImageView fx:id="imagePost" fitHeight="109.0" fitWidth="149.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="textComment" editable="false" prefHeight="200.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="28.0" prefWidth="247.0" spacing="5.0">
+               <children>
+                  <ImageView fx:id="iconLike" disable="true" fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../../img/empty-heart.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="likes" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <ImageView fx:id="iconComment" disable="true" fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/comment.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+                  <Text fx:id="comments" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Pane fx:id="panePost" prefHeight="116.0" prefWidth="151.0" />
+      <Pane layoutY="146.0" prefHeight="24.0" prefWidth="151.0" />
+   </children>
+</AnchorPane>
