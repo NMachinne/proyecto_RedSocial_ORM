@@ -1,14 +1,16 @@
 package proyecto.RedSocial.proyecto.Interfaces;
 
 
+import java.sql.Timestamp;
+
 import proyecto.RedSocial.proyecto.model.Entity.Post;
 import proyecto.RedSocial.proyecto.model.Entity.User;
 
 public interface IComment {
 
-	public String getFecha();
+	public Timestamp getFecha();
 
-	public void setFecha(String fecha);
+	public void setFecha(Timestamp fecha);
 
 	public String getTxt();
 

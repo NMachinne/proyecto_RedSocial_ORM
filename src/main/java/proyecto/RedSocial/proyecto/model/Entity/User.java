@@ -16,7 +16,7 @@ import proyecto.RedSocial.proyecto.Interfaces.IUser;
 
 @Entity(name = "user")
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements IUser,Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="id")
@@ -29,6 +29,8 @@ public class User implements Serializable {
 	@Lob
 	@Column(name="avatar",columnDefinition = "Blob")
 	protected Blob avatar;
+	
+
 	
 
 	

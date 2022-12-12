@@ -9,7 +9,7 @@ import proyecto.RedSocial.proyecto.model.Entity.Post;
 public class PostDAO extends ADAO {
 	// Las consultas MariaDB de este DAO
 	private final static String SELECTBYID = "FROM post WHERE id=?1";
-	private final static String SELECTBYID_USER = "FROM post WHERE id_usuario=?1 ORDER BY id DESC LIMIT 1";
+	private final static String SELECTBYID_USER = "SELECT id,fecha,texto,multimedia FROM post WHERE id_usuario=?1 ORDER BY id DESC LIMIT 1";
 	private final static String SELECTALL = "FROM post";
 	private final static String SELECTALLBYID_USER = "FROM post WHERE id_usuario=?1";
 	// Fin de las consultas
@@ -43,8 +43,8 @@ public class PostDAO extends ADAO {
 	
 	public Collection<Post> getByIdUser(Post post) {
 		Collection<Post> p = null;
-		Query query = manager.createQuery(SELECTBYID_USER);
-		query.setParameter(1, post.getFecha());
+		Query query = manager.createNativeQuery(SELECTBYID_USER);
+		query.setParameter(1, post.getTxt());
 		p = query.getResultList();
 		return p;
 	}

@@ -16,7 +16,7 @@ import proyecto.RedSocial.proyecto.Interfaces.ILike;
 
 @Entity(name = "likes")
 @Table(name = "likes")
-public class Like implements Serializable{
+public class Like implements ILike,Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id	
 	@Column(name = "id_usuario")

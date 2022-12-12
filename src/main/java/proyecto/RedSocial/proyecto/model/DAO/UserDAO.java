@@ -1,6 +1,7 @@
 package proyecto.RedSocial.proyecto.model.DAO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,10 +19,10 @@ public class UserDAO extends ADAO {
 	private final static String SELECTBYNAME = "FROM user WHERE nombre=?1";	
 	private final static String SELECTBYFOLLOWER = "FROM follow WHERE id=?1";
 	private final static String SELECTBYFOLLOWED = "FROM follow WHERE id_usuario=?1";
-	private final static String SELECTBYLIKE = "FROM like WHERE id_usuario=?1 AND id_publicacion=?1";
+	private final static String SELECTBYLIKE = "FROM like WHERE id_usuario=?1 AND id_publicacion=?2";
 	private final static String SELECTBYLIKEPOST = "FROM like WHERE id_publicacion=?1";
-	private final static String SELECTBYFOLLOWBYID = "FROM follow WHERE id=?1 AND id_usuario=?1";
-	private final static String SELECTBYUSERPOST = "FROM user u JOIN post p WHERE p.id_usuario=?1 AND u.id=?1 LIMIT 1";
+	private final static String SELECTBYFOLLOWBYID = "FROM follow WHERE id=?1 AND id_usuario=?2";
+	private final static String SELECTBYUSERPOST = " SELECT u.id,nombre,password,avatar FROM user u JOIN post p WHERE p.id_usuario=?1 AND u.id=?2 ";
 	private final static String SELECTALL = "FROM user";
 	// Fin de las consultas
 
@@ -59,7 +60,7 @@ public class UserDAO extends ADAO {
 	public Collection<User> getByIdUser(User user) {
 		Collection<User> u = null;
 		Query query = manager.createQuery(SELECTBYID);
-		query.setParameter(1, user.getId());
+		query.setParameter(1, user.getNombre());
 		u = query.getResultList();
 		return u;
 	}
@@ -67,44 +68,64 @@ public class UserDAO extends ADAO {
 
 	public Collection<User> getByName(User user) {
 		Collection<User> u = null;
-		u = manager.createQuery(SELECTBYNAME).getResultList();
+		Query query = manager.createQuery(SELECTBYNAME);
+		query.setParameter(1, user.getNombre());
+		u = query.getResultList();
 		return u;
 	}
 
-	public Collection<User> getByFollow(User user) {
-		Collection<User> u = null;
-		u = manager.createQuery(SELECTBYFOLLOWER).getResultList();
+	public Collection<User> getByFollow(User follow) {
+		
+		Collection<User> u = new ArrayList<User>();
+		Query query = manager.createQuery(SELECTBYFOLLOWER);
+		query.setParameter(1, follow.getId());
+		Collection<Follow> fw = null;
+		fw = query.getResultList();
+		for (Follow follow2 : fw) {
+			User uaux = (User) follow2.getIdUsuario().toArray()[0];
+			u.add(new User(follow2.getId(),uaux.getId() +"" , "", null));
+		}
 		return u;
 	}
 
-	public Collection<User> getByFollowed(User user) {
+	public Collection<User> getByFollowed(User follow) {
 		Collection<User> u = null;
-		u = manager.createQuery(SELECTBYFOLLOWED).getResultList();
+		Query query = manager.createQuery(SELECTBYFOLLOWED);
+		query.setParameter(1, follow.getNombre());
+		u = query.getResultList();
 		return u;
 	}
 
-	public Collection<User> getByLike(User user) {
+	public Collection<User> getByLike(User like) {
 		Collection<User> u = null;
-		u = manager.createQuery(SELECTBYLIKE).getResultList();
-		return u;
+		Query query = manager.createQuery(SELECTBYLIKE);
+		query.setParameter(1, like.getId());
+		query.setParameter(2, like.getNombre());
+		return u = query.getResultList();
 	}
 
-	public Collection<User> getByLikePost(User user) {
+	public Collection<User> getByLikePost(User like) {
 		Collection<User> u = null;
-		u = manager.createQuery(SELECTBYLIKEPOST).getResultList();
-		return u;
+		Query query = manager.createQuery(SELECTBYLIKEPOST);
+		query.setParameter(1, like.getNombre());
+		return u = query.getResultList();
 	}
 
-	public Collection<User> getByFollowById(User user) {
+	public Collection<User> getByFollowById(User follow) {
 		Collection<User> u = null;
-		u = manager.createQuery(SELECTBYFOLLOWBYID).getResultList();
-		return u;
+		Query query = manager.createQuery(SELECTBYFOLLOWBYID);
+		query.setParameter(1, follow.getId());
+		query.setParameter(2, follow.getNombre());
+		return u = query.getResultList();
 	}
 	
 	public Collection<User> getByUserPost(User user) {
 		Collection<User> u = null;
-		u = manager.createQuery(SELECTBYUSERPOST).getResultList();
-		return u;
+		
+		Query query = manager.createNativeQuery(SELECTBYUSERPOST);
+		query.setParameter(1,user.getNombre());
+		query.setParameter(2, user.getId());
+		return u = query.getResultList();
 	}
 
 	public Collection<User> getAll() {

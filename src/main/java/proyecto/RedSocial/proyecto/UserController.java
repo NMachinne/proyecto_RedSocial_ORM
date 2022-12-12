@@ -276,7 +276,7 @@ public class UserController extends AController implements Initializable, Runnab
 		}
 	}
 
-	@Override
+	
 	public void initialize(URL location, ResourceBundle resources) {
 		if (login_user.getId() == user.getId()) {
 			editPerfil.toFront();
@@ -294,7 +294,7 @@ public class UserController extends AController implements Initializable, Runnab
 		pd.getByIdUser(new Post(0, user.getId() + "", "", ""));
 		loadUserPost();
 		Platform.runLater(new Runnable() {
-			@Override
+			
 			public void run() {
 				Thread t = new Thread(u);
 				t.setDaemon(true);
@@ -303,7 +303,7 @@ public class UserController extends AController implements Initializable, Runnab
 		});
 	}
 
-	@Override
+	
 	public void run() {
 		User uvar = user;
 		if (action == 0) {

@@ -29,7 +29,7 @@ public class CommentDAO extends ADAO {
 		manager.getTransaction().commit();
 	}
 
-	public Collection<Comment> getByIdComment(Comment comment) {
+	public Collection<Comment> getById(Comment comment) {
 		Collection<Comment> u = null;
 		Query query = manager.createQuery(SELECTBYID);
 		query.setParameter(1, comment.getUser().getId());

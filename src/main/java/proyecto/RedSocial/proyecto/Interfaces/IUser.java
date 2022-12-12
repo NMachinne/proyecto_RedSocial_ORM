@@ -2,6 +2,9 @@ package proyecto.RedSocial.proyecto.Interfaces;
 
 import proyecto.RedSocial.proyecto.model.Entity.Post;
 import proyecto.RedSocial.proyecto.model.Entity.User;
+
+import java.sql.Blob;
+
 import proyecto.RedSocial.proyecto.model.Entity.Comment;
 
 public interface IUser {
@@ -17,7 +20,7 @@ public interface IUser {
 
 	public void setPassword(String password);
 
-	public String getAvatar();
+	public Blob getAvatar();
 
-	public void setAvatar(String avatar);
+	public void setAvatar(Blob avatar);
 }

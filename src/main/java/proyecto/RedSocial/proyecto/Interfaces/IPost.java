@@ -1,8 +1,11 @@
 package proyecto.RedSocial.proyecto.Interfaces;
 
+import java.sql.Blob;
+import java.sql.Timestamp;
 import java.util.List;
 
 import proyecto.RedSocial.proyecto.model.Entity.Comment;
+import proyecto.RedSocial.proyecto.model.Entity.Like;
 import proyecto.RedSocial.proyecto.model.Entity.User;
 
 public interface IPost {
@@ -10,23 +13,20 @@ public interface IPost {
 
 	public void setId(int id);
 
-	public String getFecha();
+	public Timestamp getFecha();
 
-	public void setFecha(String id);
+	public void setFecha(Timestamp fecha);
 
 	public String getTxt();
 
 	public void setTxt(String txt);
 
-	public String getMultimedia();
+	public Blob getMultimedia();
 
-	public void setMultimedia(String multimedia);
+	public void setMultimedia(Blob multimedia);
 
 	public User getLikes();
 
 	public void setLikes(User likes);
 
-	public Comment getComment();
-
-	public void setComment(Comment comment);
 }

@@ -20,7 +20,7 @@ import proyecto.RedSocial.proyecto.Interfaces.IComment;
 
 @Entity(name = "comment")
 @Table(name = "comment")
-public class Comment implements Serializable {
+public class Comment implements IComment,Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="fecha")

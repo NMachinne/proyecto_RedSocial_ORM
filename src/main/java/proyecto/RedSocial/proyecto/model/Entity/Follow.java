@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity(name = "follow")
 @Table(name = "follow")
-public class Follow implements  Serializable {
+public class Follow implements  IFollow,Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="id")
@@ -24,6 +24,7 @@ public class Follow implements  Serializable {
 	@OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
 	@Column(name="id_usuario")
 	protected List<User> idUsuario;
+	
 	public Follow(int id, List<User> idUsuario) {
 		super();
 		this.id = id;

@@ -2,17 +2,19 @@ package proyecto.RedSocial.proyecto.Interfaces;
 
 import java.sql.Timestamp;
 
+import proyecto.RedSocial.proyecto.model.Entity.Post;
+
 public interface ILike {
 	public int getId();
 
 	public void setId(int id);
 
-	public int getIdPublicacion();
+	public Post getIdPublicacion();
 
-	public void setIdPublicacion(int idPublicacion);
+	public void setIdPublicacion(Post idPublicacion);
 
-	public String getFecha();
+	public Timestamp getFecha();
 
-	public void setFecha(String fecha);
+	public void setFecha(Timestamp fecha);
 
 }

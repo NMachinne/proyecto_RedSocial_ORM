@@ -18,7 +18,7 @@ import proyecto.RedSocial.proyecto.Interfaces.IPost;
 
 @Entity(name = "post")
 @Table(name = "post")
-public class Post implements Serializable {
+public class Post implements IPost, Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="id")
@@ -32,18 +32,18 @@ public class Post implements Serializable {
 	protected Blob multimedia;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_usuario")
-	protected User likes;
+	protected User id_usuario;
 
-	public Post(int id, Timestamp fecha, String txt, Blob multimedia, User likes, Comment comment) {
+	public Post(int id, Timestamp fecha, String txt, Blob multimedia, User id_usuario) {
 		this.id = id;
 		this.fecha = fecha;
 		this.txt = txt;
 		this.multimedia = multimedia;
-		this.likes = likes;
+		this.id_usuario = id_usuario;
 	}
 
 	public Post() {
-		this(-1,null,"",null,null,null);
+		this(-1,null,"",null,null);
 	}
 	
 	public Post(int id, Timestamp fecha, String txt, Blob multimedia) {
@@ -86,11 +86,11 @@ public class Post implements Serializable {
 	}
 
 	public User getLikes() {
-		return likes;
+		return id_usuario;
 	}
 
 	public void setLikes(User likes) {
-		this.likes = likes;
+		this.id_usuario = likes;
 	}
 
 
@@ -119,7 +119,7 @@ public class Post implements Serializable {
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", fecha=" + fecha + ", txt=" + txt + ", multimedia=" + multimedia + ", likes="
-				+ likes + ", comment=" + "]";
+				+ id_usuario + ", comment=" + "]";
 	}
 
 }
