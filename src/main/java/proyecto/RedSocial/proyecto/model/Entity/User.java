@@ -14,20 +14,20 @@ import javax.persistence.UniqueConstraint;
 
 import proyecto.RedSocial.proyecto.Interfaces.IUser;
 
-@Entity
-@Table(name = "USER")
+@Entity(name = "user")
+@Table(name = "user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="ID")
+	@Column(name="id")
 	protected int id;
-	@Column(name="NOMBRE")
+	@Column(name="nombre")
 	//@UniqueConstraint(name="NOMBRE")
 	protected String nombre;
-	@Column(name="PASSWORD")
+	@Column(name="password")
 	protected String password;
 	@Lob
-	@Column(name="AVATAR",columnDefinition = "Blob")
+	@Column(name="avatar",columnDefinition = "Blob")
 	protected Blob avatar;
 	
 

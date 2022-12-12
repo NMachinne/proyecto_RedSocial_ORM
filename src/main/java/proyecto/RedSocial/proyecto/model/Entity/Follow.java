@@ -13,26 +13,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "FOLLOW")
+@Entity(name = "follow")
+@Table(name = "follow")
 public class Follow implements  Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="ID")
+	@Column(name="id")
 	protected int id;
-	//@Id
-	//@OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
-	@Column(name="ID_USUARIO")
-	//protected List<User>  idUsuario;
-	protected int  idUsuario;
-	public Follow(int id, int idUsuario) {
+	@Id
+	@OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
+	@Column(name="id_usuario")
+	protected List<User> idUsuario;
+	public Follow(int id, List<User> idUsuario) {
 		super();
 		this.id = id;
 		this.idUsuario = idUsuario;
 	}
 	
 	public Follow() {
-		this(-1,-1);
+		this(-1,null);
 	}
 	
 	public int getId() {
@@ -41,10 +40,10 @@ public class Follow implements  Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int  getIdUsuario() {
+	public List<User> getIdUsuario() {
 		return idUsuario;
 	}
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(List<User> idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 	

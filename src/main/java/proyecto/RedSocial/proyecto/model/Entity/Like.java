@@ -14,21 +14,20 @@ import javax.persistence.Table;
 
 import proyecto.RedSocial.proyecto.Interfaces.ILike;
 
-@Entity
-@Table(name = "LIKES")
+@Entity(name = "likes")
+@Table(name = "likes")
 public class Like implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id	
-	@Column(name = "ID_USUARIO")
+	@Column(name = "id_usuario")
 	protected int id;
-	//@ManyToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name="ID_PUBLICACION")
-	@Column(name="ID_PUBLICACION")
-	protected int idPublicacion;
-	@Column(name="FECHA")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="id_publicacion")
+	protected Post idPublicacion;
+	@Column(name="fecha")
 	protected Timestamp fecha;
 	
-	public Like(int id, int idPublicacion, Timestamp fecha) {
+	public Like(int id, Post idPublicacion, Timestamp fecha) {
 		super();
 		this.id = id;
 		this.idPublicacion = idPublicacion;
@@ -36,7 +35,7 @@ public class Like implements Serializable{
 	}
 	
 	public Like() {
-		this(-1,-1,null);
+		this(-1,null,null);
 	}
 
 	public int getId() {
@@ -47,11 +46,11 @@ public class Like implements Serializable{
 		this.id = id;
 	}
 
-	public int getIdPublicacion() {
+	public Post getIdPublicacion() {
 		return idPublicacion;
 	}
 
-	public void setIdPublicacion(int idPublicacion) {
+	public void setIdPublicacion(Post idPublicacion) {
 		this.idPublicacion = idPublicacion;
 	}
 

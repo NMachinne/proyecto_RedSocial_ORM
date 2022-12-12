@@ -16,26 +16,25 @@ import javax.persistence.Table;
 
 import proyecto.RedSocial.proyecto.Interfaces.IPost;
 
-@Entity
-@Table(name = "POST")
+@Entity(name = "post")
+@Table(name = "post")
 public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="ID")
+	@Column(name="id")
 	protected int id;
-	@Column(name="FECHA")
+	@Column(name="fecha")
 	protected Timestamp fecha;
-	@Column(name="TEXTO")
+	@Column(name="texto")
 	protected String txt;
 	@Lob
-	@Column(name="MULTIMEDIA",columnDefinition = "Blob")
+	@Column(name="multimedia",columnDefinition = "Blob")
 	protected Blob multimedia;
-	//@ManyToOne(fetch = FetchType.LAZY)
-	//@JoinColumn(name="ID_USUARIO")
-	@Column(name="ID_USUARIO")
-	protected int likes;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_usuario")
+	protected User likes;
 
-	public Post(int id, Timestamp fecha, String txt, Blob multimedia, int likes, Comment comment) {
+	public Post(int id, Timestamp fecha, String txt, Blob multimedia, User likes, Comment comment) {
 		this.id = id;
 		this.fecha = fecha;
 		this.txt = txt;
@@ -44,7 +43,7 @@ public class Post implements Serializable {
 	}
 
 	public Post() {
-		this(-1,null,"",null,-1,null);
+		this(-1,null,"",null,null,null);
 	}
 	
 	public Post(int id, Timestamp fecha, String txt, Blob multimedia) {
@@ -86,11 +85,11 @@ public class Post implements Serializable {
 		this.multimedia = multimedia;
 	}
 
-	public int getLikes() {
+	public User getLikes() {
 		return likes;
 	}
 
-	public void setLikes(int likes) {
+	public void setLikes(User likes) {
 		this.likes = likes;
 	}
 

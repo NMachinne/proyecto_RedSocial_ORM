@@ -107,8 +107,8 @@ public class UserDAO extends ADAO {
 		return u;
 	}
 
-	public List<User> getAll() {
-		List<User> u = null;
+	public Collection<User> getAll() {
+		Collection<User> u = null;
 		u = manager.createQuery(SELECTALL).getResultList();
 		return u;
 	}
