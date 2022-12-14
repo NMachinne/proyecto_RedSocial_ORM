@@ -23,19 +23,22 @@ import javax.persistence.UniqueConstraint;
 
 import proyecto.RedSocial.proyecto.Interfaces.IUser;
 
-@Entity
-@Table(name = "user")
+@Entity(name = "user")
+@Table(name = "USER")
 public class User implements IUser, Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	protected int id;
+
 	@Column(name = "nombre")
 	// @UniqueConstraint(name="NOMBRE")
 	protected String nombre;
+
 	@Column(name = "password")
 	protected String password;
+
 	@Lob
 	@Column(name = "avatar", columnDefinition = "Blob")
 	protected Blob avatar;
@@ -43,23 +46,26 @@ public class User implements IUser, Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario")
 	List<Post> postUser;
-	// @ManyToOne(cascade = CascadeType.ALL) 
-    
-    @JoinTable(name = "follow",joinColumns = 
-    		@JoinColumn(name = "id_follower"), inverseJoinColumns = 
-    		@JoinColumn(name = "id_followed"))
-    @ManyToMany
-    private List<User> followed;
-    @ManyToMany(mappedBy = "followed")
-    private List<User> follower;
-    @ManyToMany(mappedBy = "like")
-    private List<Post> postsLikes;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Post> post;
-    
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> postComments;
-    
+	// @ManyToOne(cascade = CascadeType.ALL)
+
+	@JoinTable(name = "FOLLOW", joinColumns = @JoinColumn(name = "id_follower"), inverseJoinColumns = @JoinColumn(name = "id_followed"))
+	@ManyToMany
+	private List<User> follower;
+
+	@ManyToMany(mappedBy = "follower")
+	private List<User> followed;
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "LIKES", joinColumns = { @JoinColumn(name = "id_usuario") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_post") })
+	protected List<User> like;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Post> post;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comment> postComments;
+
 	public User() {
 		this(0, "", "", null);
 	}
@@ -79,25 +85,27 @@ public class User implements IUser, Serializable {
 		this.id = id;
 	}
 
-	
-	public List<Post> getPostsLikes() {
-		return postsLikes;
+	public List<User> getUserLikes() {
+		return like;
 	}
 
-	public void setPostsLikes(List<Post> postsLikes) {
-		if (postsLikes == null) return;
-		for (Post pl: postsLikes) {
-			this.addPostLikes(pl);
-		};
+	public void setUserLikes(List<User> userLikes) {
+		if (userLikes == null)
+			return;
+		for (User like : userLikes) {
+			this.addUserLikes(like);
+		}
+		;
 	}
-	public boolean addPostLikes(Post pl) {
+
+	public boolean addUserLikes(User like) {
 		boolean result = false;
-		if(this.postsLikes == null) {
-			this.postsLikes = new ArrayList<Post>();
-			this.postsLikes.add(pl);
+		if (this.like == null) {
+			this.like = new ArrayList<User>();
+			this.like.add(like);
 			result = true;
 		} else {
-			this.postsLikes.add(pl);
+			this.like.add(like);
 			result = true;
 		}
 		return result;
@@ -108,15 +116,17 @@ public class User implements IUser, Serializable {
 	}
 
 	public void setPost(List<Post> posts) {
-		if (posts == null) return;
-		for (Post p: posts) {
+		if (posts == null)
+			return;
+		for (Post p : posts) {
 			this.addPosts(p);
-		};
+		}
+		;
 	}
-	
+
 	public boolean addPosts(Post p) {
 		boolean result = false;
-		if(this.post == null) {
+		if (this.post == null) {
 			this.post = new ArrayList<Post>();
 			this.post.add(p);
 			result = true;
@@ -132,15 +142,17 @@ public class User implements IUser, Serializable {
 	}
 
 	public void setPostComments(List<Comment> postComments) {
-		if (postComments == null) return;
-		for (Comment pc: postComments) {
+		if (postComments == null)
+			return;
+		for (Comment pc : postComments) {
 			this.addPostsComments(pc);
-		};
+		}
+		;
 	}
-	
+
 	public boolean addPostsComments(Comment c) {
 		boolean result = false;
-		if(this.postComments == null) {
+		if (this.postComments == null) {
 			this.postComments = new ArrayList<Comment>();
 			this.postComments.add(c);
 			result = true;
@@ -175,7 +187,6 @@ public class User implements IUser, Serializable {
 		this.avatar = avatar;
 	}
 
-	
 	public List<Post> getPostUser() {
 		return postUser;
 	}
@@ -183,18 +194,18 @@ public class User implements IUser, Serializable {
 	public void setPostUser(List<Post> postUser) {
 		this.postUser = postUser;
 	}
-	
-	
 
 	public List<User> getFollowed() {
 		return followed;
 	}
 
 	public void setFollowed(List<User> followed) {
-		if (followed == null) return;
-		for (User u: followed) {
+		if (followed == null)
+			return;
+		for (User u : followed) {
 			this.addFollowed(u);
-		};
+		}
+		;
 	}
 
 	public List<User> getFollower() {
@@ -202,14 +213,17 @@ public class User implements IUser, Serializable {
 	}
 
 	public void setFollower(List<User> follower) {
-		if (follower == null) return;
-		for (User u: follower) {
+		if (follower == null)
+			return;
+		for (User u : follower) {
 			this.addFollowers(u);
-		};
+		}
+		;
 	}
+
 	public boolean addFollowers(User u) {
 		boolean result = false;
-		if(this.follower == null) {
+		if (this.follower == null) {
 			this.follower = new ArrayList<User>();
 			this.follower.add(u);
 			result = true;
@@ -219,11 +233,11 @@ public class User implements IUser, Serializable {
 		}
 		return result;
 	}
-	
+
 	public boolean addFollowed(User u) {
 		boolean result = false;
-		if(this.followed == null) {
-			this.followed= new ArrayList<User>();
+		if (this.followed == null) {
+			this.followed = new ArrayList<User>();
 			this.followed.add(u);
 			result = true;
 		} else {
@@ -257,7 +271,11 @@ public class User implements IUser, Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", nombre=" + nombre + ", password=" + password + ", avatar=" + avatar + "]";
+		return "User [id=" + id + ", nombre=" + nombre + ", password=" + password + ", avatar=" + avatar + ", postUser="
+				+ postUser + ", follower=" + follower + ", followed=" + followed + ", like=" + like + ", post=" + post
+				+ ", postComments=" + postComments + "]";
 	}
+
+	
 
 }

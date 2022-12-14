@@ -26,27 +26,31 @@ import javax.persistence.Table;
 import proyecto.RedSocial.proyecto.Interfaces.IPost;
 
 @Entity
-@Table(name = "post")
+@Table(name = "POST")
 public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	protected int id;
+	
 	@Column(name="fecha")
 	protected Timestamp fecha;
+	
 	@Column(name="texto")
 	protected String txt;
+	
 	@JoinColumn(name = "id_usuario")
 	@Lob
 	@Column(name="multimedia",columnDefinition = "Blob")
 	protected Blob multimedia;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_usuario")
-	protected User idUsuario;
-	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "like",joinColumns = {@JoinColumn(name = "id_usuario")}, inverseJoinColumns = {@JoinColumn(name = "id_post")})
-	protected List<User> like;
+	protected User user;
+	
+	@ManyToMany(mappedBy = "like")
+    private List<Post> postsLikes;
 	
 	@OneToMany(mappedBy = "post",cascade = CascadeType.ALL,orphanRemoval = true)
 	protected List<Comment> comments;
@@ -57,7 +61,7 @@ public class Post implements Serializable {
 		this.fecha = fecha;
 		this.txt = txt;
 		this.multimedia = multimedia;
-		this.idUsuario = idUsuario;
+		this.user = idUsuario;
 	}
 
 	public Post() {
@@ -104,40 +108,39 @@ public class Post implements Serializable {
 	}
 
 	public User getLikes() {
-		return idUsuario;
+		return user;
 	}
 
 	public void setLikes(User idUsuario) {
-		this.idUsuario = idUsuario;
+		this.user = idUsuario;
 	}
 	
 	public User getIdUsuario() {
-		return idUsuario;
+		return user;
 	}
 
 	public void setIdUsuario(User idUsuario) {
-		this.idUsuario = idUsuario;
+		this.user = idUsuario;
 	}
 
-	public List<User> getUserLikes() {
-		return like;
+	public List<Post> getPostsLikes() {
+		return postsLikes;
 	}
 
-	public void setUserLikes(List<User> userLikes) {
-		if (userLikes == null) return;
-		for (User like: userLikes) {
-			this.addUserLikes(like);
+	public void setPostsLikes(List<Post> postsLikes) {
+		if (postsLikes == null) return;
+		for (Post pl: postsLikes) {
+			this.addPostLikes(pl);
 		};
 	}
-	
-	public boolean addUserLikes(User like) {
+	public boolean addPostLikes(Post pl) {
 		boolean result = false;
-		if (this.like == null) {
-			this.like = new ArrayList<User>();
-			this.like.add(like);
+		if(this.postsLikes == null) {
+			this.postsLikes = new ArrayList<Post>();
+			this.postsLikes.add(pl);
 			result = true;
 		} else {
-			this.like.add(like);
+			this.postsLikes.add(pl);
 			result = true;
 		}
 		return result;
@@ -192,7 +195,7 @@ public class Post implements Serializable {
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", fecha=" + fecha + ", txt=" + txt + ", multimedia=" + multimedia + ", idUsuario="
-				+ idUsuario + ", userLikes=" + like + ", comments=" + comments + "]";
+				+ user + ", userLikes=" + postsLikes + ", comments=" + comments + "]";
 	}
 
 	

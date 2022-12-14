@@ -172,8 +172,7 @@ public class PostController extends AController implements Initializable, Runnab
 					if (post != null) {
 						Thread.sleep(1000);
 						try {
-							post_imagen.setImage(new Image(
-									new ByteArrayInputStream(Base64.getDecoder().decode(post.getMultimedia().getBinaryStream().readAllBytes()))));
+							post_imagen.setImage(new Image(new ByteArrayInputStream(Base64.getDecoder().decode( post.getMultimedia().getBytes(0, (int) post.getMultimedia().length())))));
 						} catch (Exception e) {
 						}
 						post_texto.setText("Fecha: " + post.getFecha() + "\nUsuario: " + user.getNombre() + "\n\n"
@@ -237,8 +236,7 @@ public class PostController extends AController implements Initializable, Runnab
 						if (post != null) {
 							Thread.sleep(1000);
 							try {
-								post_imagen.setImage(new Image(
-										new ByteArrayInputStream(Base64.getDecoder().decode(post.getMultimedia().getBinaryStream().readAllBytes()))));
+								post_imagen.setImage(new Image(new ByteArrayInputStream(Base64.getDecoder().decode( post.getMultimedia().getBytes(0, (int) post.getMultimedia().length())))));
 							} catch (Exception e) {
 							}
 							post_texto.setText("Fecha: " + post.getFecha() + "\nUsuario: " + user.getNombre() + "\n\n"

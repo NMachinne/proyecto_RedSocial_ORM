@@ -64,7 +64,7 @@ public class ItemUserController extends AController {
 	 */
 	public void setData(User user) {
 		try {
-			Image img = new Image(new ByteArrayInputStream(Base64.getDecoder().decode(user.getAvatar().getBinaryStream().readAllBytes())));
+			Image img = new Image(new ByteArrayInputStream(Base64.getDecoder().decode( post.getMultimedia().getBytes(0, (int) post.getMultimedia().length()))));
 			imgfollowuser.setImage(img);
 		} catch (Exception e) {
 			// TODO: handle exception

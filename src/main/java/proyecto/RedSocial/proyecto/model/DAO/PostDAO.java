@@ -1,8 +1,7 @@
 package proyecto.RedSocial.proyecto.model.DAO;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,10 +11,8 @@ import proyecto.RedSocial.proyecto.model.Entity.Post;
 
 public class PostDAO extends ADAO {
 	// Las consultas MariaDB de este DAO
-	private final static String SELECTBYID = "FROM post WHERE id=?1";
 	private final static String SELECTBYID_USER = "SELECT id,fecha,texto,multimedia FROM post WHERE id_usuario=?1 ORDER BY id DESC LIMIT 1";
 	private final static String SELECTALL = "FROM post";
-	private final static String SELECTALLBYID_USER = "FROM post WHERE id_usuario=?1";
 	// Fin de las consultas
 	
 	private static EntityManager manager;
@@ -33,18 +30,16 @@ public class PostDAO extends ADAO {
 	}
 
 	public Collection<Post> getById(Post post) {
-		Collection<Post> p = null;
-		Query query = manager.createQuery(SELECTBYID);
-		query.setParameter(1, post.getId());
-		p = query.getResultList();
+		Collection<Post> p = new ArrayList<Post>();
+		Post aux = manager.find(Post.class, post.getId());
+		p.add(aux);
 		return p;
 	}
 	
 	public Collection<Post> getAllByIdUser(Post post){
-		Collection<Post> p = null;
-		Query query = manager.createQuery(SELECTALLBYID_USER);
-		query.setParameter(1, post.getId());
-		p = query.getResultList();
+		Collection<Post> p = new ArrayList<Post>();
+		Post aux =manager.find( Post.class, post.getId());
+		p = aux.getIdUsuario().getPost();
 		return p;
 	}
 	

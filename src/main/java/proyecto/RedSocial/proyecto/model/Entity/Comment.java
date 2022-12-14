@@ -21,21 +21,26 @@ import proyecto.RedSocial.proyecto.Interfaces.IComment;
 
 
 @Entity
-@Table(name = "comment")
+@Table(name = "COMMENT")
 public class Comment implements IComment,Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_usuario")
+	protected User user;	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="id_publicacion")
+	protected Post post;
+	
 	@Column(name="fecha")
 	protected Timestamp fecha;
 	@Column(name="texto")
 	protected String txt;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_usuario")
-	protected User user;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id_publicacion")
-	protected Post post;
+	
 
 	public Comment(Timestamp fecha, String txt, User user, Post post) {
 

@@ -76,7 +76,7 @@ public class UserPostController extends AController{
 			al.setHeaderText("are you SURE you want to DELETE the post? \n" +" with date time  "+ paux.getFecha());
 			al.setTitle("DELETE POST");
 			Optional<ButtonType> result = al.showAndWait();
-			if (result.isEmpty()) {	
+			if (result.empty() != null) {	
 			} else if (result.get() == ButtonType.OK) {
 				pd.delete(new Post(num, null, "", null));
 				refreshDelete = true;
@@ -96,7 +96,7 @@ public class UserPostController extends AController{
 	 */
 	public void setData(Post post) {
 		try {
-			imagePost.setImage(new Image(new ByteArrayInputStream(Base64.getDecoder().decode(post.getMultimedia().getBinaryStream().readAllBytes()))));
+			imagePost.setImage(new Image(new ByteArrayInputStream(Base64.getDecoder().decode( post.getMultimedia().getBytes(0, (int) post.getMultimedia().length())))));
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

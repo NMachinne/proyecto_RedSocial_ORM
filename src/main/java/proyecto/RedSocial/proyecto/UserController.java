@@ -307,12 +307,17 @@ public class UserController extends AController implements Initializable, Runnab
 		}
 		action = 0;
 		u = this;
-		getNameUser.setText(user.getNombre());
-		nPost.setText(pd.getAllByIdUser(new Post(user.getId(), null, "", null)).size() + "");
-		nFollowed.setText(ud.getByFollow(user).size() + "");
-		nFollower.setText(ud.getByFollowed(user).size() + "");
-		pd.getByIdUser(new Post(0,null ,user.getId() + "", null));
-		loadUserPost();
+		try {
+			getNameUser.setText(user.getNombre());
+			nPost.setText(pd.getAllByIdUser(new Post(user.getId(), null, "", null)).size() + "");
+			nFollowed.setText(ud.getByFollow(user).size() + "");
+			nFollower.setText(ud.getByFollowed(user).size() + "");
+			pd.getByIdUser(new Post(0,null ,user.getId() + "", null));
+			loadUserPost();
+		} catch (Exception e) {
+			
+		}	
+		
 		Platform.runLater(new Runnable() {
 			
 			public void run() {
@@ -336,8 +341,7 @@ public class UserController extends AController implements Initializable, Runnab
 								nPost.setText(pd.getAllByIdUser(new Post(uvar.getId(), null, "", null)).size() + "");
 								nFollowed.setText(ud.getByFollow(uvar).size() + "");
 								nFollower.setText(ud.getByFollowed(uvar).size() + "");
-								imgUser.setImage(new Image(
-										new ByteArrayInputStream(Base64.getDecoder().decode(uvar.getAvatar().getBinaryStream().readAllBytes()))));
+								imgUser.setImage(new Image(new ByteArrayInputStream(Base64.getDecoder().decode( post.getMultimedia().getBytes(0, (int) post.getMultimedia().length())))));
 							} catch (Exception e) {
 
 							}
@@ -351,9 +355,9 @@ public class UserController extends AController implements Initializable, Runnab
 								follow = false;
 							}
 							if (follow) {
-								followuser.setText("SIGUIENDO");
+								//followuser.setText("SIGUIENDO");
 							} else {
-								followuser.setText("SEGUIR");
+								//followuser.setText("SEGUIR");
 							}
 							try {
 								if (post != null) {
