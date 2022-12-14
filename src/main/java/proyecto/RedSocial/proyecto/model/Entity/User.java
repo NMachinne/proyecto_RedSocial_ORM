@@ -4,11 +4,17 @@ import java.io.Serializable;
 import java.sql.Blob;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -16,28 +22,45 @@ import proyecto.RedSocial.proyecto.Interfaces.IUser;
 
 @Entity(name = "user")
 @Table(name = "user")
-public class User implements IUser,Serializable {
+public class User implements IUser, Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	protected int id;
-	@Column(name="nombre")
-	//@UniqueConstraint(name="NOMBRE")
+	@Column(name = "nombre")
+	// @UniqueConstraint(name="NOMBRE")
 	protected String nombre;
-	@Column(name="password")
+	@Column(name = "password")
 	protected String password;
 	@Lob
-	@Column(name="avatar",columnDefinition = "Blob")
+	@Column(name = "avatar", columnDefinition = "Blob")
 	protected Blob avatar;
-	
 
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_usuario")
+	List<Post> postUser;
+	// @ManyToOne(cascade = CascadeType.ALL)
 	
-
-	
+	//@OneToMany
+	//@JoinTable(name = "follow", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
+    //@ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    //@JoinTable(name = "followe", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
+	/*private List<User> following;
+    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<User> followed;
+	//List<User> misFollower;*/
+  
+    
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinTable(name = "follow", joinColumns = @JoinColumn(name = "id_follower"), inverseJoinColumns = @JoinColumn(name = "id_followed"))
+    private List<User> followed;
+    @ManyToMany(mappedBy = "followed", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<User> follower;
+    
 	public User() {
-		this(-1,"","",null);
+		this(-1, "", "", null);
 	}
-	
+
 	public User(int id, String nombre, String password, Blob avatar) {
 		this.id = id;
 		this.nombre = nombre;
@@ -76,8 +99,7 @@ public class User implements IUser,Serializable {
 	public void setAvatar(Blob avatar) {
 		this.avatar = avatar;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -99,13 +121,10 @@ public class User implements IUser,Serializable {
 			return false;
 		return true;
 	}
-	
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", nombre=" + nombre + ", password=" + password + ", avatar=" + avatar + "]";
 	}
-
-	
 
 }

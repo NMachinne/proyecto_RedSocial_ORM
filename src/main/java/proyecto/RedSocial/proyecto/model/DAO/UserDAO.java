@@ -1,15 +1,13 @@
 package proyecto.RedSocial.proyecto.model.DAO;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import proyecto.RedSocial.proyecto.model.Entity.Follow;
-import proyecto.RedSocial.proyecto.model.Entity.Like;
+
 import proyecto.RedSocial.proyecto.model.Entity.Post;
 import proyecto.RedSocial.proyecto.model.Entity.User;
 
@@ -22,8 +20,15 @@ public class UserDAO extends ADAO {
 	private final static String SELECTBYLIKE = "FROM like WHERE id_usuario=?1 AND id_publicacion=?2";
 	private final static String SELECTBYLIKEPOST = "FROM like WHERE id_publicacion=?1";
 	private final static String SELECTBYFOLLOWBYID = "FROM follow WHERE id=?1 AND id_usuario=?2";
-	private final static String SELECTBYUSERPOST = " SELECT u.id,nombre,password,avatar FROM user u JOIN post p WHERE p.id_usuario=?1 AND u.id=?2 ";
+	private final static String SELECTBYUSERPOST = "SELECT u.id,nombre,password,avatar FROM user u JOIN post p WHERE p.id_usuario=?1 AND u.id=?2 LIMIT 1";
 	private final static String SELECTALL = "FROM user";
+	
+	private final static String INSERTLIKE  = "INSERT INTO likes (id_usuario,id_publicacion,fecha) VALUES (?1,?2,?3)";
+	private final static String INSERTFOLLOW = "INSERT INTO follow (id,id_usuario) VALUES (?1,?2)";
+	private final static String DELETEFOLLOW = "DELETE FROM follow WHERE id=? AND id_usuario=?";
+	private final static String DELETELIKE = "DELETE FROM likes WHERE id_usuario=? and id_publicacion=?";
+	
+	
 	// Fin de las consultas
 
 	public UserDAO() {
@@ -32,20 +37,28 @@ public class UserDAO extends ADAO {
 	}
 	
 	public void save(User user) {
-			manager.getTransaction().begin();
-			manager.persist(user);
-			manager.getTransaction().commit();
-	}
-
-	public void saveLike(Like like) {
 		manager.getTransaction().begin();
-		manager.persist(like);
+		manager.persist(user);
 		manager.getTransaction().commit();
 	}
 
-	public void insertFollow(Follow follow) {
+	public void saveLike(User us) {
+		
 		manager.getTransaction().begin();
-		manager.persist(follow);
+		Query query= manager.createNativeQuery(INSERTLIKE);
+		query.setParameter(1,us.getId());
+		query.setParameter(2,us.getNombre());
+		query.setParameter(3,us.getPassword());
+		query.executeUpdate();
+		manager.getTransaction().commit();
+	}
+
+	public void insertFollow(User us) {
+		manager.getTransaction().begin();
+		Query query= manager.createNativeQuery(INSERTFOLLOW);
+		query.setParameter(1,us.getId());
+		query.setParameter(2,us.getNombre());
+		query.executeUpdate();
 		manager.getTransaction().commit();
 	}
 
@@ -60,11 +73,10 @@ public class UserDAO extends ADAO {
 	public Collection<User> getByIdUser(User user) {
 		Collection<User> u = null;
 		Query query = manager.createQuery(SELECTBYID);
-		query.setParameter(1, user.getNombre());
+		query.setParameter(1, user.getId());
 		u = query.getResultList();
 		return u;
 	}
-
 
 	public Collection<User> getByName(User user) {
 		Collection<User> u = null;
@@ -74,58 +86,54 @@ public class UserDAO extends ADAO {
 		return u;
 	}
 
-	public Collection<User> getByFollow(User follow) {
-		
-		Collection<User> u = new ArrayList<User>();
-		Query query = manager.createQuery(SELECTBYFOLLOWER);
-		query.setParameter(1, follow.getId());
-		Collection<Follow> fw = null;
-		fw = query.getResultList();
-		for (Follow follow2 : fw) {
-			User uaux = (User) follow2.getIdUsuario().toArray()[0];
-			u.add(new User(follow2.getId(),uaux.getId() +"" , "", null));
-		}
-		return u;
-	}
-
-	public Collection<User> getByFollowed(User follow) {
+	public Collection<User> getByFollow(User user) {
 		Collection<User> u = null;
-		Query query = manager.createQuery(SELECTBYFOLLOWED);
-		query.setParameter(1, follow.getNombre());
+		Query query = manager.createQuery(SELECTBYFOLLOWER);
+		query.setParameter(1, user.getId());
 		u = query.getResultList();
 		return u;
 	}
 
-	public Collection<User> getByLike(User like) {
+	public Collection<User> getByFollowed(User user) {
+		Collection<User> u = null;
+		Query query = manager.createQuery(SELECTBYFOLLOWED);
+		query.setParameter(1, user.getId());
+		u = query.getResultList();
+		return u;
+	}
+
+	public Collection<User> getByLike(User user) {
 		Collection<User> u = null;
 		Query query = manager.createQuery(SELECTBYLIKE);
-		query.setParameter(1, like.getId());
-		query.setParameter(2, like.getNombre());
-		return u = query.getResultList();
+		query.setParameter(1, user.getId());
+		query.setParameter(2, user.getNombre());
+		u = query.getResultList();
+		return u;
 	}
 
-	public Collection<User> getByLikePost(User like) {
+	public Collection<User> getByLikePost(User user) {
 		Collection<User> u = null;
 		Query query = manager.createQuery(SELECTBYLIKEPOST);
-		query.setParameter(1, like.getNombre());
-		return u = query.getResultList();
+		query.setParameter(1, user.getId());
+		u = query.getResultList();
+		return u;
 	}
 
-	public Collection<User> getByFollowById(User follow) {
+	public Collection<User> getByFollowById(User user) {
 		Collection<User> u = null;
 		Query query = manager.createQuery(SELECTBYFOLLOWBYID);
-		query.setParameter(1, follow.getId());
-		query.setParameter(2, follow.getNombre());
-		return u = query.getResultList();
+		query.setParameter(1, user.getId());
+		query.setParameter(2, user.getNombre());
+		u = query.getResultList();
+		return u;
 	}
 	
 	public Collection<User> getByUserPost(User user) {
 		Collection<User> u = null;
-		
 		Query query = manager.createNativeQuery(SELECTBYUSERPOST);
-		query.setParameter(1,user.getNombre());
-		query.setParameter(2, user.getId());
-		return u = query.getResultList();
+		query.setParameter(1, user.getId());
+		query.setParameter(2, user.getNombre());
+		return u;
 	}
 
 	public Collection<User> getAll() {
@@ -133,7 +141,6 @@ public class UserDAO extends ADAO {
 		u = manager.createQuery(SELECTALL).getResultList();
 		return u;
 	}
-	 
 
 	public void update(User user) {
 		manager.getTransaction().begin();
@@ -147,15 +154,21 @@ public class UserDAO extends ADAO {
 		manager.getTransaction().commit();
 	}
 
-	public void deleteLike(Like like) {
+	public void deleteLike(User su) {
 		manager.getTransaction().begin();
-		manager.remove(like);
+		Query query= manager.createNativeQuery(DELETELIKE);
+		query.setParameter(1,su.getId());
+		query.setParameter(2,su.getNombre());
+		query.executeUpdate();
 		manager.getTransaction().commit();
 	}
 	
-	public void deleteFollow(Follow follow) {
+	public void deleteFollow(User su) {
 		manager.getTransaction().begin();
-		manager.remove(follow);
+		Query query= manager.createNativeQuery(DELETEFOLLOW);
+		query.setParameter(1,su.getId());
+		query.setParameter(2,su.getNombre());
+		query.executeUpdate();
 		manager.getTransaction().commit();
 	}
 

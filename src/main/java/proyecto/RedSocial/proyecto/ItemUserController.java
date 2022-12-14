@@ -51,9 +51,9 @@ public class ItemUserController extends AController {
 	 */
 	@FXML
 	void unfollowUser(ActionEvent event) {
-		User uaux = (User) ud.getByName(new User(0, nameFolllowUser.getText(), "", "")).toArray()[0];
-		ud.deleteFollow(new User(login_user.getId(), uaux.getId() + "", "", ""));
-		ud.deleteFollow(new User(uaux.getId(), login_user.getId() + "", "", ""));
+		User uaux = (User) ud.getByName(new User(0, nameFolllowUser.getText(), "", null)).toArray()[0];
+		ud.deleteFollow(new User(login_user.getId(), uaux.getId() + "", "", null));
+		ud.deleteFollow(new User(uaux.getId(), login_user.getId() + "", "", null));
 		refreshFollow = true;
 	}
 
@@ -64,7 +64,7 @@ public class ItemUserController extends AController {
 	 */
 	public void setData(User user) {
 		try {
-			Image img = new Image(new ByteArrayInputStream(Base64.getDecoder().decode(user.getAvatar())));
+			Image img = new Image(new ByteArrayInputStream(Base64.getDecoder().decode(user.getAvatar().getBinaryStream().readAllBytes())));
 			imgfollowuser.setImage(img);
 		} catch (Exception e) {
 			// TODO: handle exception

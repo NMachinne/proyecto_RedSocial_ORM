@@ -62,7 +62,7 @@ public class FollowerController extends AController implements Initializable, Ru
 	 * permite cargar una coleccion de seguidores
 	 */
 	public void loadFollowed() {
-		Collection<User> useres = new UserDAO().getByFollow(new User(user.getId(), "", "", ""));
+		Collection<User> useres = new UserDAO().getByFollow(new User(user.getId(), "", "", null));
 		User uaux= new User();
 		for (int i = 0; i < useres.size(); i++) {
 			FXMLLoader fxmloader = new FXMLLoader();
@@ -71,7 +71,7 @@ public class FollowerController extends AController implements Initializable, Ru
 				HBox apane = fxmloader.load();
 				ItemUserController uc = fxmloader.getController();
 				uaux =((User)useres.toArray()[i]);	
-				uc.setData((User)new UserDAO().getByIdUser(new User(0,uaux.getNombre(),"","")).toArray()[0]);
+				uc.setData((User)new UserDAO().getByIdUser(new User(0,uaux.getNombre(),"",null)).toArray()[0]);
 				Vboxlayout.getChildren().add(apane);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -82,7 +82,7 @@ public class FollowerController extends AController implements Initializable, Ru
 	 * permite cargar una coleccion de seguidos
 	 */
 	public void loadFollower() {
-		Collection<User> useres = new UserDAO().getByFollowed(new User(user.getId(), "", "", ""));
+		Collection<User> useres = new UserDAO().getByFollowed(new User(user.getId(), "", "", null));
 		User uaux= new User();
 		for (int i = 0; i < useres.size(); i++) {
 			FXMLLoader fxmloader = new FXMLLoader();
@@ -91,7 +91,7 @@ public class FollowerController extends AController implements Initializable, Ru
 				HBox apane = fxmloader.load();
 				ItemUserController uc = fxmloader.getController();
 				uaux =((User)useres.toArray()[i]);
-				uc.setData((User)new UserDAO().getById(new User(uaux.getId(),"","","")).toArray()[0]);
+				uc.setData((User)new UserDAO().getById(new User(uaux.getId(),"","",null)).toArray()[0]);
 				Vboxlayout.getChildren().add(apane);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -99,7 +99,7 @@ public class FollowerController extends AController implements Initializable, Ru
 		}
 	}
 	
-	@Override
+	
 	public void initialize(URL location, ResourceBundle resources) {
 		getnameFollow.setText(nameFollow);
 		if (nameFollow.equals("Follower")) {
@@ -109,7 +109,7 @@ public class FollowerController extends AController implements Initializable, Ru
 		}
 		f=this;
 		Platform.runLater(new Runnable() {
-			@Override
+			
 			public void run() {
 				Thread t = new Thread(f);
 				t.setDaemon(true);
@@ -119,7 +119,7 @@ public class FollowerController extends AController implements Initializable, Ru
 		});
 	}
 	
-	@Override
+
 	public void run() {
 		while (true) {
 			try {

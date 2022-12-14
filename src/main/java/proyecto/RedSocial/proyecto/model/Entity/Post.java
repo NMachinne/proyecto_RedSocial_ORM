@@ -4,6 +4,7 @@ package proyecto.RedSocial.proyecto.model.Entity;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import proyecto.RedSocial.proyecto.Interfaces.IPost;
 
 @Entity(name = "post")
 @Table(name = "post")
-public class Post implements IPost, Serializable {
+public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="id")
@@ -32,18 +33,20 @@ public class Post implements IPost, Serializable {
 	protected Blob multimedia;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_usuario")
-	protected User id_usuario;
+	protected User idUsuario;
+	
+	//List<Post> likesPost;
 
-	public Post(int id, Timestamp fecha, String txt, Blob multimedia, User id_usuario) {
+	public Post(int id, Timestamp fecha, String txt, Blob multimedia, User idUsuario) {
 		this.id = id;
 		this.fecha = fecha;
 		this.txt = txt;
 		this.multimedia = multimedia;
-		this.id_usuario = id_usuario;
+		this.idUsuario = idUsuario;
 	}
 
 	public Post() {
-		this(-1,null,"",null,null);
+		this(0,null,"",null,null);
 	}
 	
 	public Post(int id, Timestamp fecha, String txt, Blob multimedia) {
@@ -86,11 +89,11 @@ public class Post implements IPost, Serializable {
 	}
 
 	public User getLikes() {
-		return id_usuario;
+		return idUsuario;
 	}
 
-	public void setLikes(User likes) {
-		this.id_usuario = likes;
+	public void setLikes(User idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 
@@ -118,8 +121,8 @@ public class Post implements IPost, Serializable {
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", fecha=" + fecha + ", txt=" + txt + ", multimedia=" + multimedia + ", likes="
-				+ id_usuario + ", comment=" + "]";
+		return "Post [id=" + id + ", fecha=" + fecha + ", txt=" + txt + ", multimedia=" + multimedia + ", idUsuario="
+				+ idUsuario + "]";
 	}
 
 }

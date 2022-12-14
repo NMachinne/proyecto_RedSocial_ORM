@@ -4,12 +4,17 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -99,7 +104,7 @@ public class UserController extends AController implements Initializable, Runnab
 	void follow(ActionEvent event) {
 		boolean follow = false;
 		try {
-			if (new UserDAO().getByFollowById(new User(login_user.getId(), user.getId() + "", "", ""))
+			if (new UserDAO().getByFollowById(new User(login_user.getId(), user.getId() + "", "", null))
 					.toArray()[0] != null)
 				;
 			follow = true;
@@ -107,9 +112,9 @@ public class UserController extends AController implements Initializable, Runnab
 			follow = false;
 		}
 		if (follow) {
-			ud.deleteFollow(new User(login_user.getId(), user.getId() + "", "", ""));
+			ud.deleteFollow(new User(login_user.getId(), user.getId() + "", "", null));
 		} else {
-			ud.insertFollow(new User(login_user.getId(), user.getId() + "", "", ""));
+			ud.insertFollow(new User(login_user.getId(), user.getId() + "", "", null));
 		}
 
 	}
@@ -157,7 +162,7 @@ public class UserController extends AController implements Initializable, Runnab
 	@FXML
 	void backtoMenu(MouseEvent event) throws IOException {
 		try {
-			User paux = (User) new UserDAO().getByUserPost(new User(user.getId(), user.getId() + "", "", ""))
+			User paux = (User) new UserDAO().getByUserPost(new User(user.getId(), user.getId() + "", "", null))
 					.toArray()[0];
 			user = paux;
 			// user = null;post = null;
@@ -232,11 +237,26 @@ public class UserController extends AController implements Initializable, Runnab
 		fc.getExtensionFilters().add(new ExtensionFilter("Se permite png, jpg y bmp", "*.png", "*.jpg", "*.bmp"));
 		File f = fc.showOpenDialog(null);
 
-		String imagen = "";
+		String imagen = null;
 		File fl = f.getAbsoluteFile();
 		imagen = epc.encodeFileToBase64(fl);
-		ud.update(new User(login_user.getId(), login_user.getNombre(), login_user.getPassword(), imagen));
-		u.setAvatar(imagen);
+		byte[] byteData = imagen.getBytes();
+
+		Blob docInBlob = null;
+		try {
+			docInBlob = new SerialBlob(byteData);
+		} catch (SerialException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ud.update(new User(login_user.getId(), login_user.getNombre(), login_user.getPassword(), docInBlob));
+		
+		
+		u.setAvatar(docInBlob);
 
 		user = (User) ud.getById(login_user).toArray()[0];
 		login_user = (User) ud.getById(login_user).toArray()[0];
@@ -252,7 +272,7 @@ public class UserController extends AController implements Initializable, Runnab
 	 * carga una coleccion de post de un usuario con su contenido
 	 */
 	public void loadUserPost() {
-		Collection<Post> posts = new PostDAO().getAllByIdUser(new Post(user.getId(), "", "", ""));
+		Collection<Post> posts = new PostDAO().getAllByIdUser(new Post(user.getId(), null, "", null));
 		int columns = 0;
 		int rows = 1;
 		try {
@@ -288,10 +308,10 @@ public class UserController extends AController implements Initializable, Runnab
 		action = 0;
 		u = this;
 		getNameUser.setText(user.getNombre());
-		nPost.setText(pd.getAllByIdUser(new Post(user.getId(), "", "", "")).size() + "");
+		nPost.setText(pd.getAllByIdUser(new Post(user.getId(), null, "", null)).size() + "");
 		nFollowed.setText(ud.getByFollow(user).size() + "");
 		nFollower.setText(ud.getByFollowed(user).size() + "");
-		pd.getByIdUser(new Post(0, user.getId() + "", "", ""));
+		pd.getByIdUser(new Post(0,null ,user.getId() + "", null));
 		loadUserPost();
 		Platform.runLater(new Runnable() {
 			
@@ -313,18 +333,18 @@ public class UserController extends AController implements Initializable, Runnab
 						try {
 							Thread.sleep(1000);
 							try {
-								nPost.setText(pd.getAllByIdUser(new Post(uvar.getId(), "", "", "")).size() + "");
+								nPost.setText(pd.getAllByIdUser(new Post(uvar.getId(), null, "", null)).size() + "");
 								nFollowed.setText(ud.getByFollow(uvar).size() + "");
 								nFollower.setText(ud.getByFollowed(uvar).size() + "");
 								imgUser.setImage(new Image(
-										new ByteArrayInputStream(Base64.getDecoder().decode(uvar.getAvatar()))));
+										new ByteArrayInputStream(Base64.getDecoder().decode(uvar.getAvatar().getBinaryStream().readAllBytes()))));
 							} catch (Exception e) {
 
 							}
 							boolean follow = false;
 							try {
 								if (new UserDAO()
-										.getByFollowById(new User(login_user.getId(), user.getId() + "", "", ""))
+										.getByFollowById(new User(login_user.getId(), user.getId() + "", "", null))
 										.toArray()[0] != null);
 								follow = true;
 							} catch (Exception e) {

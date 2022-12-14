@@ -71,20 +71,20 @@ public class UserPostController extends AController{
 		}
 		int num = Integer.parseInt(r);
 		if (isPostDel) {
-			Post paux = (Post) pd.getById(new Post(num,"","","")).toArray()[0];
+			Post paux = (Post) pd.getById(new Post(num,null,"",null)).toArray()[0];
 			Alert al = new Alert(Alert.AlertType.CONFIRMATION);
 			al.setHeaderText("are you SURE you want to DELETE the post? \n" +" with date time  "+ paux.getFecha());
 			al.setTitle("DELETE POST");
 			Optional<ButtonType> result = al.showAndWait();
 			if (result.isEmpty()) {	
 			} else if (result.get() == ButtonType.OK) {
-				pd.delete(new Post(num, "", "", ""));
+				pd.delete(new Post(num, null, "", null));
 				refreshDelete = true;
 			} else if (result.get() == ButtonType.CANCEL) {
 				
 			} 
 		} else {
-			post = (Post) pd.getById(new Post(num,"","","")).toArray()[0];
+			post = (Post) pd.getById(new Post(num,null,"",null)).toArray()[0];
 		}
 		
 		
@@ -96,13 +96,13 @@ public class UserPostController extends AController{
 	 */
 	public void setData(Post post) {
 		try {
-			imagePost.setImage(new Image(new ByteArrayInputStream(Base64.getDecoder().decode(post.getMultimedia()))));
+			imagePost.setImage(new Image(new ByteArrayInputStream(Base64.getDecoder().decode(post.getMultimedia().getBinaryStream().readAllBytes()))));
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		textComment.setText(post.getFecha() + "\n\n" + post.getTxt());
-		likes.setText(us.getByLikePost(new User(post.getId(), "", "", "")).size() + "");
-		comments.setText(cd.getById(new Comment("", "", new User(), new Post(post.getId(), "", "", ""))).size() + "");
+		likes.setText(us.getByLikePost(new User(post.getId(), "", "", null)).size() + "");
+		comments.setText(cd.getById(new Comment(null, "", new User(), new Post(post.getId(), null, "", null))).size() + "");
 		panePost.setId(post.getId() + "");
 
 	}

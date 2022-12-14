@@ -2,6 +2,7 @@ package proyecto.RedSocial.proyecto;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +45,8 @@ public class CommentPostController extends AController {
 	@FXML
 	void sendComment(ActionEvent event) {
 
-		cd.save(new Comment(LocalDateTime.now().withNano(0) + "", textComment.getText(),
-				new User(login_user.getId(), "", "", ""), new Post(post.getId(), "", "", "")));
+		cd.save(new Comment(Timestamp.valueOf(LocalDateTime.now().withNano(0)), textComment.getText(),
+				new User(login_user.getId(), "", "", null), new Post(post.getId(), null, "", null)));
 		refresh = true;
 		// user = login_user;
 		textComment.getScene().getWindow().hide();

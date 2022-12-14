@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import proyecto.RedSocial.proyecto.model.Entity.Comment;
-import proyecto.RedSocial.proyecto.model.Entity.Like;
 import proyecto.RedSocial.proyecto.model.Entity.User;
 
 public interface IPost {

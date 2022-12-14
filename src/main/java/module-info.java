@@ -11,6 +11,7 @@ module proyecto.RedSocial.proyecto {
 	requires java.persistence;
 	requires jdk.javadoc;
 	requires org.mariadb.jdbc;
+	requires java.sql.rowset;
 
     opens proyecto.RedSocial.proyecto to javafx.fxml;
     opens proyecto.RedSocial.proyecto.model.Entity to javafx.base;

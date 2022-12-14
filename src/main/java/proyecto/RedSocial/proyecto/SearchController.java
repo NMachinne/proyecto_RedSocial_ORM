@@ -73,12 +73,12 @@ public class SearchController extends AController  implements Initializable{
 		}
 
 		if (r != null && !r.toString().equals("null")) {
-			AController.user = (User) new UserDAO().getByName(new User(-1, r, "", "")).toArray()[0];
+			AController.user = (User) new UserDAO().getByName(new User(-1, r, "", null)).toArray()[0];
 			texto.getScene().getWindow().hide();
 		}
 	}
 
-	@Override
+
 	public void initialize(URL location, ResourceBundle resources) {
 		bbuscar(null);
 	}

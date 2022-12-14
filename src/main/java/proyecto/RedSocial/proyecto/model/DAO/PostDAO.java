@@ -1,6 +1,10 @@
 package proyecto.RedSocial.proyecto.model.DAO;
 
+import java.sql.SQLException;
 import java.util.Collection;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -13,6 +17,9 @@ public class PostDAO extends ADAO {
 	private final static String SELECTALL = "FROM post";
 	private final static String SELECTALLBYID_USER = "FROM post WHERE id_usuario=?1";
 	// Fin de las consultas
+	
+	private static EntityManager manager;
+	private static EntityManagerFactory emf;
 	
 	public PostDAO() {
 		emf = Persistence.createEntityManagerFactory("mariadb");

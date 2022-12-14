@@ -4,10 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,21 +49,33 @@ public class EscribePostController extends AController {
 	void multiFileChooser(ActionEvent event) {
 		// LoginController lg=new LoginController();
 		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(new ExtensionFilter("Se permite png, jpg y bmp", "*.png", "*.jpg","*.bmp"));
+		fc.getExtensionFilters().add(new ExtensionFilter("Se permite png, jpg y bmp", "*.png", "*.jpg", "*.bmp"));
 		File f = fc.showOpenDialog(null);
 
-			String nam = "";
-			String imagen = "";
-			File fl = f.getAbsoluteFile();
-			nam = f.getAbsolutePath();
-			imagen = encodeFileToBase64(fl);
-		
+		String nam = "";
+		String imagen = "";
+		File fl = f.getAbsoluteFile();
+		nam = f.getAbsolutePath();
+		imagen = encodeFileToBase64(fl);
+		byte[] byteData = imagen.getBytes();
+
+		Blob docInBlob = null;
+		try {
+			docInBlob = new SerialBlob(byteData);
+		} catch (SerialException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		ruta.setText(nam);
-		p1.setLikes(new User(login_user.getId(), "", "", ""));
+		p1.setLikes(new User(login_user.getId(), "", "", null));
 		LocalDateTime locdate = LocalDateTime.now().withNano(0);
-		p1.setFecha(locdate + "");
-		p1.setMultimedia(imagen);
+		p1.setFecha(Timestamp.valueOf(locdate));
+		p1.setMultimedia(docInBlob);
+
 		// ps.save(p1);
 	}
 
@@ -66,8 +84,8 @@ public class EscribePostController extends AController {
 		LocalDateTime locdate = LocalDateTime.now().withNano(0);
 		String text = texto.getText();
 		p1.setTxt(text);
-		p1.setLikes(new User(login_user.getId(), "", "", ""));
-		p1.setFecha(locdate + "");
+		p1.setLikes(new User(login_user.getId(), "", "", null));
+		p1.setFecha(Timestamp.valueOf(locdate));
 		ps.save(p1);
 		texto.setText("");
 

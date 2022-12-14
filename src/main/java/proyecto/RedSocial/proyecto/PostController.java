@@ -26,7 +26,6 @@ import proyecto.RedSocial.proyecto.model.DAO.CommentDAO;
 import proyecto.RedSocial.proyecto.model.DAO.PostDAO;
 import proyecto.RedSocial.proyecto.model.DAO.UserDAO;
 import proyecto.RedSocial.proyecto.model.Entity.Comment;
-import proyecto.RedSocial.proyecto.model.Entity.Like;
 import proyecto.RedSocial.proyecto.model.Entity.Post;
 import proyecto.RedSocial.proyecto.model.Entity.User;
 
@@ -123,9 +122,9 @@ public class PostController extends AController implements Initializable, Runnab
 			isLike = false;
 		}
 		if (isLike) {
-			new UserDAO().deleteLike(new Like(login_user.getId(), post, locdate));
+			new UserDAO().deleteLike(new User(login_user.getId(), post.getId()+"", null,null));
 		} else {
-			new UserDAO().saveLike(new Like(login_user.getId(), post, locdate));
+			new UserDAO().saveLike(new User(login_user.getId(), post.getId()+"", locdate.toString(),null));
 		}
 	}
 

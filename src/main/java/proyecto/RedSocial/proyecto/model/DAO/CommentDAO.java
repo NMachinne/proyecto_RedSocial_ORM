@@ -11,11 +11,8 @@ import proyecto.RedSocial.proyecto.model.Entity.Comment;
 
 public class CommentDAO extends ADAO {
 	// Las consultas MariaDB de este DAO
-	private final static String INSERT = "INSERT INTO comment (id_usuario,id_publicacion,fecha,texto) VALUES (?,?,?,?)";
-	private final static String UPDATE = "UPDATE comment SET fecha=?,texto=? WHERE id=?";
-	private final static String DELETE = "DELETE FROM comment WHERE id=?";
-	private final static String SELECTBYID = "SELECT id_usuario,id_publicacion,fecha,texto FROM comment WHERE id_publicacion=?";
-	private final static String SELECTALL = "SELECT id_usuario,id_publicacion,fecha,texto FROM comment";
+	private final static String SELECTBYID = "FROM comment WHERE id_publicacion=?";
+	private final static String SELECTALL = "FROM comment";
 
 	// Fin de las consultas
 	public CommentDAO() {
@@ -32,7 +29,7 @@ public class CommentDAO extends ADAO {
 	public Collection<Comment> getById(Comment comment) {
 		Collection<Comment> u = null;
 		Query query = manager.createQuery(SELECTBYID);
-		query.setParameter(1, comment.getUser().getId());
+		query.setParameter(1, comment.getPost().getId());
 		u = query.getResultList();
 		return u;
 	}
