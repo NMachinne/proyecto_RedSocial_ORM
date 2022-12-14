@@ -23,7 +23,7 @@ import javax.persistence.UniqueConstraint;
 
 import proyecto.RedSocial.proyecto.Interfaces.IUser;
 
-@Entity(name = "user")
+@Entity
 @Table(name = "user")
 public class User implements IUser, Serializable {
 	private static final long serialVersionUID = 1L;
