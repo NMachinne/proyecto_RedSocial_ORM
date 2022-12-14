@@ -9,23 +9,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #6936f5;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #f4d595;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.LoginController">
    <children>
-      <Text fx:id="pswrd" fill="WHITE" layoutX="121.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEW PASSWORD">
+      <Text fx:id="pswrd" layoutX="121.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEW PASSWORD">
          <font>
             <Font name="Dosis SemiBold" size="23.0" />
          </font>
       </Text>
-      <Button fx:id="changepassword" layoutX="136.0" layoutY="456.0" mnemonicParsing="false" onAction="#recoverpasswd2" prefHeight="29.0" prefWidth="131.0" style="-fx-background-color: #bb84ea;" text="Change" textFill="WHITE">
+      <Button fx:id="changepassword" layoutX="136.0" layoutY="456.0" mnemonicParsing="false" onAction="#recoverpasswd2" prefHeight="29.0" prefWidth="131.0" style="-fx-background-color: #da7d31;" text="Change">
          <font>
             <Font name="Dosis SemiBold" size="16.0" />
          </font>
       </Button>
       <ImageView fx:id="photo" fitHeight="190.0" fitWidth="300.0" layoutX="50.0" layoutY="45.0">
          <image>
-            <Image url="@../../../img/Logo.jpeg" />
+            <Image url="@../../../img/Captura.PNG" />
          </image></ImageView>
-      <Text fx:id="username" fill="WHITE" layoutX="142.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME">
+      <Text fx:id="username" layoutX="142.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME">
          <font>
             <Font name="Dosis SemiBold" size="23.0" />
          </font>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="postUserId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showUserPost" prefHeight="170.0" prefWidth="150.0" style="-fx-background-color: #6936f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.UserPostController">
+<AnchorPane fx:id="postUserId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showUserPost" prefHeight="170.0" prefWidth="150.0" style="-fx-background-color: #f4d595;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.UserPostController">
    <children>
       <VBox alignment="CENTER" prefHeight="153.0" prefWidth="150.0" style="-fx-border-color: black;">
          <children>
@@ -26,7 +26,7 @@
                         <Image url="@../../../img/empty-heart.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="likes" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="likes" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                   <ImageView fx:id="iconComment" disable="true" fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../img/comment.png" />
@@ -35,7 +35,7 @@
                         <Insets />
                      </HBox.margin>
                   </ImageView>
-                  <Text fx:id="comments" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                  <Text fx:id="comments" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

@@ -19,7 +19,7 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		scene = new Scene(loadFXML("login"));
-		Image appIcon =new Image(getClass().getResourceAsStream("/img/Logo.jpeg"));
+		Image appIcon =new Image(getClass().getResourceAsStream("/img/Logo.png"));
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.getIcons().add(appIcon);

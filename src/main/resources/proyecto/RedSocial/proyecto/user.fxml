@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #6a37f4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.UserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #f4d595;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.UserController">
    <children>
       <AnchorPane prefHeight="491.0" prefWidth="399.0">
          <children>
@@ -29,11 +29,11 @@
                      <children>
                         <Pane prefHeight="98.0" prefWidth="89.0">
                            <children>
-                              <Text fill="WHITE" layoutX="32.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post" textAlignment="CENTER">
+                              <Text layoutX="32.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post" textAlignment="CENTER">
                                  <font>
                                     <Font name="Dosis SemiBold" size="12.0" />
                                  </font></Text>
-                              <Text fx:id="nPost" fill="WHITE" layoutX="28.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nPost" textAlignment="CENTER">
+                              <Text fx:id="nPost" layoutX="28.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nPost" textAlignment="CENTER">
                                  <font>
                                     <Font name="Dosis SemiBold" size="12.0" />
                                  </font></Text>
@@ -41,11 +41,11 @@
                         </Pane>
                         <Pane prefHeight="98.0" prefWidth="89.0">
                            <children>
-                              <Text fx:id="nFollower" fill="WHITE" layoutX="18.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-alignment: center;" text="nFollower" textAlignment="CENTER">
+                              <Text fx:id="nFollower" layoutX="18.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-alignment: center;" text="nFollower" textAlignment="CENTER">
                                  <font>
                                     <Font name="Dosis SemiBold" size="12.0" />
                                  </font></Text>
-                              <Text fx:id="idnameFollower" fill="WHITE" layoutX="21.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Follower" textAlignment="CENTER">
+                              <Text fx:id="idnameFollower" layoutX="21.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Follower" textAlignment="CENTER">
                                  <font>
                                     <Font name="Dosis SemiBold" size="12.0" />
                                  </font></Text>
@@ -54,11 +54,11 @@
                         </Pane>
                         <Pane prefHeight="98.0" prefWidth="89.0">
                            <children>
-                              <Text fx:id="nFollowed" fill="WHITE" layoutX="18.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nFollowed">
+                              <Text fx:id="nFollowed" layoutX="18.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nFollowed">
                                  <font>
                                     <Font name="Dosis SemiBold" size="12.0" />
                                  </font></Text>
-                              <Text fx:id="idnameFollowed" fill="WHITE" layoutX="21.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Followed" textAlignment="CENTER">
+                              <Text fx:id="idnameFollowed" layoutX="21.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Followed" textAlignment="CENTER">
                                  <font>
                                     <Font name="Dosis SemiBold" size="12.0" />
                                  </font></Text>
@@ -67,7 +67,7 @@
                         </Pane>
                      </children>
                   </HBox>
-                  <Text fx:id="getNameUser" fill="WHITE" layoutX="52.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserNotFound">
+                  <Text fx:id="getNameUser" layoutX="52.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserNotFound">
                      <font>
                         <Font name="Dosis SemiBold" size="12.0" />
                      </font></Text>
@@ -75,7 +75,7 @@
                      <font>
                         <Font name="Dosis SemiBold" size="12.0" />
                      </font></Button>
-                  <ImageView fitHeight="40.0" fitWidth="52.0" layoutY="14.0" onMouseClicked="#backtoMenu" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="52.0" layoutX="9.0" layoutY="6.0" onMouseClicked="#backtoMenu" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../img/leftArrow.png" />
                      </image>
@@ -83,7 +83,7 @@
                   <Button fx:id="followuser" layoutX="192.0" layoutY="114.0" mnemonicParsing="false" onAction="#follow" prefHeight="28.0" prefWidth="146.0" text="SEGUIR" visible="false" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutY="160.0" prefHeight="269.0" prefWidth="395.0" style="-fx-background-color: #9361ed;">
+            <AnchorPane layoutY="160.0" prefHeight="269.0" prefWidth="395.0" style="-fx-background-color: #f4d595;">
                <children>
                   <ScrollPane fx:id="userPosts" hbarPolicy="NEVER" layoutX="6.0" prefHeight="284.0" prefWidth="387.0" styleClass="tr" vbarPolicy="ALWAYS">
                      <content>

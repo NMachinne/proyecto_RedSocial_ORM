@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="369.0" spacing="90.0" style="-fx-background-color: #6a37f4; -fx-border-color: #9361ed; -fx-border-width: 1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.ItemUserController">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="369.0" spacing="90.0" style="-fx-background-color: #f4d595; -fx-border-color: #9361ed; -fx-border-width: 1;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.ItemUserController">
    <children>
       <ImageView fx:id="imgfollowuser" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
          <image>
@@ -19,7 +19,7 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
-      <Text fx:id="nameFolllowUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="nickname" wrappingWidth="109.712890625">
+      <Text fx:id="nameFolllowUser" strokeType="OUTSIDE" strokeWidth="0.0" text="nickname" wrappingWidth="109.712890625">
          <HBox.margin>
             <Insets left="-80.0" />
          </HBox.margin>
@@ -27,7 +27,7 @@
             <Font name="Dosis SemiBold" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="btnUnfollow" mnemonicParsing="false" onAction="#unfollowUser" prefHeight="45.0" prefWidth="78.0" style="-fx-background-color: #9361ed;" text="Unfollow" textFill="WHITE">
+      <Button fx:id="btnUnfollow" mnemonicParsing="false" onAction="#unfollowUser" prefHeight="45.0" prefWidth="78.0" style="-fx-background-color: #da7d31;" text="Unfollow">
          <HBox.margin>
             <Insets />
          </HBox.margin>

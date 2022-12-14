@@ -44,7 +44,7 @@ public class User implements IUser, Serializable {
 	//@OneToMany
 	//@JoinTable(name = "follow", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     //@ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    //@JoinTable(name = "followe", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
+    //@JoinTable(name = "follow", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
 	/*private List<User> following;
     @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> followed;
