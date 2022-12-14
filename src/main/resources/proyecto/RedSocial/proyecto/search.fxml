@@ -8,10 +8,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #6936f5;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.SearchController">
+<Pane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #f4d595;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.RedSocial.proyecto.SearchController">
    <children>
       <TextField fx:id="texto" layoutX="31.0" layoutY="67.0" prefHeight="25.0" prefWidth="280.0" />
-      <Text fill="WHITE" layoutX="149.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscador">
+      <Text layoutX="149.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscador">
          <font>
             <Font name="Dosis SemiBold" size="23.0" />
          </font>
@@ -21,7 +21,7 @@
           <TableColumn fx:id="c1" prefWidth="341.0" resizable="false" text="User" />
         </columns>
       </TableView>
-      <Button layoutX="323.0" layoutY="67.0" mnemonicParsing="false" onAction="#bbuscar" style="-fx-background-color: #bb84ea;" text="Buscar" textFill="WHITE">
+      <Button layoutX="323.0" layoutY="67.0" mnemonicParsing="false" onAction="#bbuscar" style="-fx-background-color: #da7d31;" text="Buscar">
          <font>
             <Font name="Dosis SemiBold" size="12.0" />
          </font></Button>
