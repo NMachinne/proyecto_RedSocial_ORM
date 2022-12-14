@@ -2,12 +2,15 @@ package proyecto.RedSocial.proyecto.model.Entity;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,6 +28,7 @@ import proyecto.RedSocial.proyecto.Interfaces.IUser;
 public class User implements IUser, Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	protected int id;
 	@Column(name = "nombre")
@@ -39,26 +43,25 @@ public class User implements IUser, Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario")
 	List<Post> postUser;
-	// @ManyToOne(cascade = CascadeType.ALL)
-	
-	//@OneToMany
-	//@JoinTable(name = "follow", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
-    //@ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    //@JoinTable(name = "follow", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
-	/*private List<User> following;
-    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<User> followed;
-	//List<User> misFollower;*/
-  
+	// @ManyToOne(cascade = CascadeType.ALL) 
     
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    @JoinTable(name = "follow", joinColumns = @JoinColumn(name = "id_follower"), inverseJoinColumns = @JoinColumn(name = "id_followed"))
+    @JoinTable(name = "follow",joinColumns = 
+    		@JoinColumn(name = "id_follower"), inverseJoinColumns = 
+    		@JoinColumn(name = "id_followed"))
+    @ManyToMany
     private List<User> followed;
-    @ManyToMany(mappedBy = "followed", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "followed")
     private List<User> follower;
+    @ManyToMany(mappedBy = "like")
+    private List<Post> postsLikes;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> post;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> postComments;
     
 	public User() {
-		this(-1, "", "", null);
+		this(0, "", "", null);
 	}
 
 	public User(int id, String nombre, String password, Blob avatar) {
@@ -74,6 +77,78 @@ public class User implements IUser, Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	
+	public List<Post> getPostsLikes() {
+		return postsLikes;
+	}
+
+	public void setPostsLikes(List<Post> postsLikes) {
+		if (postsLikes == null) return;
+		for (Post pl: postsLikes) {
+			this.addPostLikes(pl);
+		};
+	}
+	public boolean addPostLikes(Post pl) {
+		boolean result = false;
+		if(this.postsLikes == null) {
+			this.postsLikes = new ArrayList<Post>();
+			this.postsLikes.add(pl);
+			result = true;
+		} else {
+			this.postsLikes.add(pl);
+			result = true;
+		}
+		return result;
+	}
+
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> posts) {
+		if (posts == null) return;
+		for (Post p: posts) {
+			this.addPosts(p);
+		};
+	}
+	
+	public boolean addPosts(Post p) {
+		boolean result = false;
+		if(this.post == null) {
+			this.post = new ArrayList<Post>();
+			this.post.add(p);
+			result = true;
+		} else {
+			this.post.add(p);
+			result = true;
+		}
+		return result;
+	}
+
+	public List<Comment> getPostComments() {
+		return postComments;
+	}
+
+	public void setPostComments(List<Comment> postComments) {
+		if (postComments == null) return;
+		for (Comment pc: postComments) {
+			this.addPostsComments(pc);
+		};
+	}
+	
+	public boolean addPostsComments(Comment c) {
+		boolean result = false;
+		if(this.postComments == null) {
+			this.postComments = new ArrayList<Comment>();
+			this.postComments.add(c);
+			result = true;
+		} else {
+			this.postComments.add(c);
+			result = true;
+		}
+		return result;
 	}
 
 	public String getNombre() {
@@ -98,6 +173,64 @@ public class User implements IUser, Serializable {
 
 	public void setAvatar(Blob avatar) {
 		this.avatar = avatar;
+	}
+
+	
+	public List<Post> getPostUser() {
+		return postUser;
+	}
+
+	public void setPostUser(List<Post> postUser) {
+		this.postUser = postUser;
+	}
+	
+	
+
+	public List<User> getFollowed() {
+		return followed;
+	}
+
+	public void setFollowed(List<User> followed) {
+		if (followed == null) return;
+		for (User u: followed) {
+			this.addFollowed(u);
+		};
+	}
+
+	public List<User> getFollower() {
+		return follower;
+	}
+
+	public void setFollower(List<User> follower) {
+		if (follower == null) return;
+		for (User u: follower) {
+			this.addFollowers(u);
+		};
+	}
+	public boolean addFollowers(User u) {
+		boolean result = false;
+		if(this.follower == null) {
+			this.follower = new ArrayList<User>();
+			this.follower.add(u);
+			result = true;
+		} else {
+			this.follower.add(u);
+			result = true;
+		}
+		return result;
+	}
+	
+	public boolean addFollowed(User u) {
+		boolean result = false;
+		if(this.followed == null) {
+			this.followed= new ArrayList<User>();
+			this.followed.add(u);
+			result = true;
+		} else {
+			this.followed.add(u);
+			result = true;
+		}
+		return result;
 	}
 
 	@Override
