@@ -84,9 +84,23 @@ public class EscribePostController extends AController {
 		LocalDateTime locdate = LocalDateTime.now().withNano(0);
 		String text = texto.getText();
 		p1.setTxt(text);
-		p1.setLikes(new User(login_user.getId(), "", "", null));
+		p1.setLikes(login_user);
+		String imagen = "1";
+		byte[] byteData = imagen.getBytes();
+		Blob docInBlob = null;
 		p1.setFecha(Timestamp.valueOf(locdate));
+		try {
+			docInBlob = new SerialBlob(byteData);
+		} catch (SerialException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
+		p1.setMultimedia(docInBlob);
 		ps.save(p1);
+		}
+		catch (Exception e) {}
 		texto.setText("");
 
 	}

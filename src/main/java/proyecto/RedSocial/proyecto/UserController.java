@@ -272,7 +272,8 @@ public class UserController extends AController implements Initializable, Runnab
 	 * carga una coleccion de post de un usuario con su contenido
 	 */
 	public void loadUserPost() {
-		Collection<Post> posts = new PostDAO().getAllByIdUser(new Post(user.getId(), null, "", null));
+		Collection<Post> posts = new PostDAO().getAll();
+		//Collection<Post> posts = new PostDAO().getAllByIdUser(new Post(user.getId(), null, "", null));
 		int columns = 0;
 		int rows = 1;
 		try {
@@ -309,10 +310,20 @@ public class UserController extends AController implements Initializable, Runnab
 		u = this;
 		try {
 			getNameUser.setText(user.getNombre());
+} catch (Exception e) {}	
+		try {
 			nPost.setText(pd.getAllByIdUser(new Post(user.getId(), null, "", null)).size() + "");
+		} catch (Exception e) {}	
+			try {
 			nFollowed.setText(ud.getByFollow(user).size() + "");
+			} catch (Exception e) {}	
+			try {
 			nFollower.setText(ud.getByFollowed(user).size() + "");
+			} catch (Exception e) {}	
+			try {
 			pd.getByIdUser(new Post(0,null ,user.getId() + "", null));
+			} catch (Exception e) {}	
+			try {
 			loadUserPost();
 		} catch (Exception e) {
 			

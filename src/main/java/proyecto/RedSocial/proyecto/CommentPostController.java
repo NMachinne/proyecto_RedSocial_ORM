@@ -32,6 +32,7 @@ import proyecto.RedSocial.proyecto.model.Entity.Comment;
 import proyecto.RedSocial.proyecto.model.Entity.Post;
 import proyecto.RedSocial.proyecto.model.Entity.User;
 import proyecto.RedSocial.proyecto.model.DAO.CommentDAO;
+import proyecto.RedSocial.proyecto.model.DAO.PostDAO;
 import proyecto.RedSocial.proyecto.model.DAO.UserDAO;
 
 public class CommentPostController extends AController {
@@ -40,13 +41,15 @@ public class CommentPostController extends AController {
 	private TextArea textComment;
 
 	CommentDAO cd = new CommentDAO();
+	PostDAO pd = new PostDAO();
 	UserDAO ud = new UserDAO();
 
 	@FXML
 	void sendComment(ActionEvent event) {
 
-		cd.save(new Comment(Timestamp.valueOf(LocalDateTime.now().withNano(0)), textComment.getText(),
-				new User(login_user.getId(), "", "", null), new Post(post.getId(), null, "", null)));
+		//cd.save(new Comment(Timestamp.valueOf(LocalDateTime.now().withNano(0)), textComment.getText(),
+		//		new User(login_user.getId(), "", "", null), new Post(post.getId(), null, "", null)));
+		pd.save(new Post(0,Timestamp.valueOf(LocalDateTime.now().withNano(0)), textComment.getText(), null, login_user));
 		refresh = true;
 		// user = login_user;
 		textComment.getScene().getWindow().hide();

@@ -20,18 +20,17 @@ import javax.persistence.Table;
 import proyecto.RedSocial.proyecto.Interfaces.IComment;
 
 
-@Entity
+@Entity(name = "comment")
 @Table(name = "COMMENT")
 public class Comment implements IComment,Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="id_usuario")
-	protected User user;	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected User user;
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id_publicacion")
 	protected Post post;

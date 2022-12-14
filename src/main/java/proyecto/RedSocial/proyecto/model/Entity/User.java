@@ -221,6 +221,18 @@ public class User implements IUser, Serializable {
 		;
 	}
 
+	public boolean deleteFollowed(User u){
+		boolean result = false;
+		if(this.followed != null) {
+			if(this.followed.contains(u)) {
+				this.followed.remove(u);
+				u.deleteFollower(u);
+			}
+			result = true;
+		} 	
+		return result;
+	}
+
 	public boolean addFollowers(User u) {
 		boolean result = false;
 		if (this.follower == null) {
@@ -245,6 +257,10 @@ public class User implements IUser, Serializable {
 			result = true;
 		}
 		return result;
+	}
+	
+	public void deleteFollower(User u) {
+		this.follower.remove(u);
 	}
 
 	@Override

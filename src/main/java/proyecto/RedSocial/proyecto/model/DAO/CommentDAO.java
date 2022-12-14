@@ -16,15 +16,18 @@ public class CommentDAO extends ADAO {
 	}
 
 	public void save(Comment comment) {
-		manager.getTransaction().begin();
 		manager.persist(comment);
-		manager.getTransaction().commit();
 	}
 
 	public Collection<Comment> getById(Comment comment) {
 		Collection<Comment> c = new ArrayList<Comment>();
-		Comment aux = manager.find(Comment.class, comment.getPost().getId());
+		Comment aux = manager.find(Comment.class, comment.getUser());
+		try {
 		c.add(aux);
+		}
+		catch (Exception e) {}
+		manager.close();
+		emf.close();
 		return c;
 	}
 

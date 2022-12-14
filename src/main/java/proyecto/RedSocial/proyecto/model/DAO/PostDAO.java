@@ -27,6 +27,7 @@ public class PostDAO extends ADAO {
 		manager.getTransaction().begin();
 		manager.persist(post);
 		manager.getTransaction().commit();
+		manager.close();
 	}
 
 	public Collection<Post> getById(Post post) {
@@ -39,7 +40,10 @@ public class PostDAO extends ADAO {
 	public Collection<Post> getAllByIdUser(Post post){
 		Collection<Post> p = new ArrayList<Post>();
 		Post aux =manager.find( Post.class, post.getId());
+		try {
 		p = aux.getIdUsuario().getPost();
+		}
+		catch (Exception e) {}
 		return p;
 	}
 	

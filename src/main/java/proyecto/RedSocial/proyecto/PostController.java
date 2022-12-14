@@ -149,6 +149,7 @@ public class PostController extends AController implements Initializable, Runnab
 		post_texto.setText("Cargando Post...");
 		comment_texto.setText("Cargando Comentarios...");
 		action = 0;
+		post = null;
 		p = this;
 
 		Platform.runLater(new Runnable() {
@@ -231,8 +232,15 @@ public class PostController extends AController implements Initializable, Runnab
 								l = post2.getId();
 							}
 						}
-						post = post2;
-						user = user2;
+						try {
+						for (Post post3 : new PostDAO().getAll()) {
+							if (post3.getMultimedia() != null) {
+								post = post3;
+							}
+						}
+						}
+						catch (Exception e) {}
+						user = login_user;
 						if (post != null) {
 							Thread.sleep(1000);
 							try {
@@ -241,34 +249,44 @@ public class PostController extends AController implements Initializable, Runnab
 							}
 							post_texto.setText("Fecha: " + post.getFecha() + "\nUsuario: " + user.getNombre() + "\n\n"
 									+ post.getTxt());
-							Collection<Comment> comment2 = null;
-							comment2 = new CommentDAO()
-									.getById(new Comment(null, "", new User(), new Post(post.getId(), null, "", null)));
-							if (comment2.size() >= 1) {
+							Collection<Post> comment2 = null;
+							comment2 = new PostDAO().getAll();
+							//comment2 = new CommentDAO().getById(new Comment(null, "", new User(), new Post(post.getId(), null, "", null)));
+							if (comment2.size() >= 2) {
 								String comments = "";
-								for (Comment c : comment2) {
-									User user_comment = (User) new UserDAO()
-											.getById(new User(c.getUser().getId(), null, null, null)).toArray()[0];
-									comments += "Fecha: " + c.getFecha() + "\nUsuario: " + user_comment.getNombre()
-											+ "\n\n" + c.getTxt() + "\n\n";
+								int co = 0;
+								for (Post c : comment2) {
+									if (co >= 1 && c.getMultimedia() == null) {
+									comments += "Fecha: " + c.getFecha() + "\n"+
+											 "\n" + c.getTxt() + "\n\n";
+									}
+									co++;
 								}
 								comment_texto.setText(comments);
 							} else {
 								comment_texto.setText("Sin Comentarios");
 							}
 							boolean isLike = false;
+							int li = 0;
 							try {
 								if (new UserDAO().getByLike(new User(login_user.getId(), post.getId() + "", "", null))
 										.toArray()[0] != null)
 									;
 								isLike = true;
+								li = 1;
 							} catch (Exception e) {
 								isLike = false;
 							}
 							post_like.setSelected(isLike);
 							while (true) {
 								try {
-									likes.setText(new UserDAO().getByLikePost(new User(post.getId(), "", "", null)).size()
+									if (post_like.isSelected()) {
+										li = 1;
+									}
+									else {
+										li = 0;
+									}
+									likes.setText(li
 											+ " Likes");
 									Thread.sleep(1000);
 								} catch (Exception e) {

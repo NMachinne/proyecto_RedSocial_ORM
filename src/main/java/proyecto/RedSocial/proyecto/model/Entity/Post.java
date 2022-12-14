@@ -25,7 +25,7 @@ import javax.persistence.Table;
 
 import proyecto.RedSocial.proyecto.Interfaces.IPost;
 
-@Entity
+@Entity(name = "post")
 @Table(name = "POST")
 public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -45,12 +45,12 @@ public class Post implements Serializable {
 	@Column(name="multimedia",columnDefinition = "Blob")
 	protected Blob multimedia;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
 	@JoinColumn(name="id_usuario")
 	protected User user;
 	
-	@ManyToMany(mappedBy = "like")
-    private List<Post> postsLikes;
+	//@ManyToMany(mappedBy = "like")
+    //private List<Post> postsLikes;
 	
 	@OneToMany(mappedBy = "post",cascade = CascadeType.ALL,orphanRemoval = true)
 	protected List<Comment> comments;
